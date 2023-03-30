@@ -1,5 +1,6 @@
 import random
 import time
+import math
 
 
 class Character:
@@ -42,6 +43,7 @@ class Player(Character):
         self.max_mp = mp
         name = p_name
         self.exp = exp
+        self.max_exp = 100
         self.level = level
 
     def attack(self):
@@ -73,17 +75,28 @@ class Player(Character):
     def show_status(self):
         print(
             f"{self.name}의 상태 : \n hp :{self.hp}/{self.max_hp} \n mp :{self.mp}/{self.max_mp}")
-# 경험치 확인가능 print, 최대경험치, 최대경험치와 같아질때 레벨업,while문
+        print(f"{self.name}의 상태 :\n exp :{self.exp}/{self.max_exp}")
 
-    def level_up(self):
-        # 경험치 100이 되었을때 필요한 것 , 20씩, 5마리=level up
-        # return,변경, 전투중 exp up
+
+def level_up(self):
+    if player.exp >= 200:
+        # 경험치가 200 넘었을경우
+        player.level += math.floor(player.exp / player.max_exp)
+        player.power += math.floor(player.exp / player.max_exp)*2
+        player.hp = player.max_hp
+        # exp = int(숫자) print(exp % 100), 끝자리 두개나옴
+        player.exp = player.exp % 100
+
+        print(f"{self.name}의 level이: {player.level}로 상승했습니다.")
+        print(f"{self.name}의 power가: {player.power}로 상승했습니다.")
+    else:
+        # 경험치가 200이 안 넘은 경우
         player.level += 1
         player.power += 2
         player.hp = player.max_hp
         player.exp = player.exp-100
-        # 몬스터가 경험치 200을 줄시 레벨업 2상승,
-        print  # 레벨업상태 #파워상승 #체력회복
+        print(f"{self.name}의 level이: {player.level}로 상승했습니다.")
+        print(f"{self.name}의 power가: {player.power}로 상승했습니다.")
 
 
 def check_answer():
@@ -101,7 +114,7 @@ def check_answer():
 
 print("이름을 입력해주세요.")
 p_name = input("이름:")
-player = Player(p_name, hp=100, mp=100, power=10)
+player = Player(p_name, hp=100, mp=100, power=10, exp=0, level=1)
 monster = Monster("오크", hp=100, power=8)
 turn = 1
 
@@ -169,3 +182,4 @@ while player.hp != 0 and monster.hp != 0:
                 time.sleep(2)
 
     turn += 1
+
