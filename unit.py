@@ -86,7 +86,7 @@ class Character:
 
         적용..player.get_equipitem(매개변수)
         """
-        print(f"{new_item.name}을(를) 얻었습니다.")
+        print(f"{self.name}이(가) {new_item.name}을(를) 얻었습니다.")
         new_item.item_power(self)
 
         # 아이템 얻었을 시 // 현재는 random, 추가 후 변경   #이 코드 아이템으로 떼갑니다^.^
@@ -133,6 +133,10 @@ class Character:
             self.exp = self.exp-100
             print(f"{self.name}의 level이: {self.level}로 상승했습니다.")
             print(f"{self.name}의 power가: {self.power}로 상승했습니다.")
+
+    def __str__(self):
+        return f'{self.name}'
+
  ##########################################################
 # 전사
 

@@ -1,6 +1,7 @@
 import unit_set
 import random
-import unit
+import time
+
 # monsters를 인자로 받는 몬스터 생성함수
 
 
@@ -28,28 +29,10 @@ def check_player():
 # 직업선택 유효성검사
 
 
-def check_job():
-    while True:
-        check = input("원하는 직업을 선택해주세요\n"
-                      "1.전사\n"
-                      "2.마법사\n"
-                      "3.힐러\n")
-        if check == '':
-            print("정확한 값을 입력해주세요.")
-        elif not check.isdigit():
-            print("숫자만 입력해주세요")
-        elif int(check) < 1 or int(check) > 3:
-            print("1에서 3사이를 입력해 주세요")
-        else:
-            return int(check)
-# users 를 인자로 받는 플레이어 생성
-
-
 def player_select(players):
     for i in range(check_player()):  # 인자 i라고 되어있는데 확인필요
-        player_sel = check_job()
-        character_class = int(player_sel)
-        players.append(unit_set.job_dict[character_class])
+        unit_set.job.show_job_list()
+        players.append(unit_set.job.select_job())
 
 # players와 monsters를 인자로 받는 battle 함수
 
@@ -191,6 +174,14 @@ def monster_attack(players, monster):
     else:
         return monster_attack(players, monster)
 
+
+def player_get_item(players):
+    for player in players:
+        new_item = unit_set.equipitem.get_random_equipitem()
+        player.get_equipitem(new_item)
+    time.sleep(3)
+
+
 # 게임 실행 함수
 # 플레이어 선택 후 while문 안에서 몬스터 생성 //// 해결 못한점 : 몬스터가 한마리 죽었을 때 바로 재생성//
 # 턴 = 층수 / 10층까지 진행 한 후 break
@@ -199,7 +190,6 @@ def monster_attack(players, monster):
 def game():
     players = []
     monsters = []
-    turn = 1
     # 시작 부분 만들기
     print("탑에 찾아온 것을 환영하네 용사여\n")
 
@@ -209,20 +199,16 @@ def game():
     print("좋아! 그럼 행운을 빌며 선물을 주도록 하지!\n")
     # 시작 시 장비 아이템 1개 랜덤 지급
     # unit.GiveItem()
+    player_get_item(players)
 
-    for player in players:
-        new_item = unit_set.equipitem.get_random_equipitem()
-        player.get_equipitem(new_item)
+    max_turn = 2
+    print(f"탑은 {max_turn}층까지 올라야 끝난다네, 행운을 비네!\n")
 
-    print("탑은 11층까지 올라야 끝난다네, 행운을 비네!\n")
-
-    while (True):
+    for turn in range(1, max_turn+1):
+        print(f"지금 {turn}층인 것 같다.")
         monsters.clear()
         team_select(monsters)
         result = battle(players, monsters)
         if not result:
             print('패배')
-            break
-        turn += 1
-        if turn == 11:
             break

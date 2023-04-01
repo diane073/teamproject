@@ -16,6 +16,30 @@ job_dict = {
     3: unit.Thief("도적", 150, 40, 30, 20, 0, 1, '급습')
 }
 
+
+class Job:
+    def show_job_list(self):
+
+        key_list = job_dict.keys()  # key 리스트가 됐어(iterate)
+        for i in key_list:
+            print(f'{i}. {job_dict[i]}')
+
+    def select_job(self):
+        idx = input(f'원하는 직업을 선택해주세요.\n1 부터 {len(job_dict)}을 입력하세요: ')
+        if idx.isdigit():
+            idx = int(idx)
+            if idx in range(1, len(job_dict) + 1):
+                job_seleted = job_dict[idx]
+                print(f'{job_seleted.name}를 선택했습니다.\n')
+                return job_seleted
+            else:
+                print(f"1에서 {len(job_dict)}사이를 입력해주세요")
+                return self.select_job()
+        else:
+            print("숫자만 입력해주세요")
+            return self.select_job()
+
+
 equipitem_list = [
     unit.ItemEffect("강철 검", "물리공격력이 10 증가", 10, 0),
     unit.ItemEffect("날카로운 창", "물리공격력이 15 증가", 8, 0),
@@ -44,9 +68,15 @@ class EquipItem:
 
 
 equipitem = EquipItem()
+job = Job()
 
 
-def main():
+def test_job():
+    job.show_job_list()
+    job.select_job()
+
+
+def test_equipment():
     equipitem.show_equipitem_list()
     item = equipitem.select_equipitem()
     print(f'{item}을 얻었다!')
@@ -54,4 +84,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    test_job()
