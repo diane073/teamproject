@@ -20,7 +20,7 @@ class Character:
 
         self.skill_name = skill_name  # 수정하면 스킬도 획득 등으로 수정가능
         # self.get_skill = ''
-        self.power_item = 0        #
+        self.power_item = 0
         self.mpower_item = 0
         self.heal_item = 0
         self.mana_item = 0
@@ -32,8 +32,8 @@ class Character:
               f"HP : [{min(self.hp + self.heal_item, self.max_hp)}/{self.max_hp}] \n"
               f"MP : [{min(self.mp + self.mana_item, self.max_mp)}/{self.max_mp}]\n"
               f"exp: [{self.exp}/{self.max_exp}]\n"  # 김주영수정
-              f"물리공격력 : {self.power + self.power_item}\n"
-              f"마법공격력 : {self.mpower + self.mpower_item} \n"
+              f"물리공격력 : {self.power+self.power_item}({self.power} + {self.power_item})\n"
+              f"마법공격력 : {self.mpower + self.mpower_item}({self.mpower} + {self.mpower_item}) \n"
               f"보유스킬 : {self.skill_name}")
     # 플레이어 생존확인
 
@@ -79,30 +79,41 @@ class Character:
             print('이미 죽은 몬스터입니다. 다른 몬스터를 공격합니다.')
             # 나중에 while문을 통해 재선택 가능하게
 
-    # 아이템 얻었을 시 // 현재는 random, 추가 후 변경   #이 코드 아이템으로 떼갑니다^.^
-    # def a_item(self):
-    #     item_num = random.randint(1, 5)
-    #     if item_num == 1:
-    #         print("검을 얻었다")
-    #         self.attack_item = 10
-    #     elif item_num == 2:
-    #         print("지팡이를 얻었다")
-    #         self.magic_item = 10
-    #     elif item_num == 3:
-    #         print("체력포션")
-    #         self.heal_item = 150
-    #     else:
-    #         print("마나포션")
-    #         self.mana_item = 30
+    def get_equipitem(self, new_item):
+        """
+        아이템을 외부에서 생성,
+        Player가 인풋받음
 
-    # 이런 식으로 스킬 추가도 가능
+        적용..player.get_equipitem(매개변수)
+        """
+        print(f"{new_item.name}을(를) 얻었습니다.")
+        new_item.item_power(self)
 
-    # def add_skill(self, geted_skill):
-    #     if self.name == "전사":
-    #         self.skill_name = geted_skill  # 기존 스킬을 변경
-    #         self.get_skill = geted_skill  # 새로 스킬을 획득
-    #         print(f"{geted_skill}을 얻었다")
-    ############ 김주영 수정##########
+        # 아이템 얻었을 시 // 현재는 random, 추가 후 변경   #이 코드 아이템으로 떼갑니다^.^
+        # def a_item(self):
+        #     item_num = random.randint(1, 5)
+        #     if item_num == 1:
+        #         print("검을 얻었다")
+        #         self.attack_item = 10
+        #     elif item_num == 2:
+        #         print("지팡이를 얻었다")
+        #         self.magic_item = 10
+        #     elif item_num == 3:
+        #         print("체력포션")
+        #         self.heal_item = 150
+        #     else:
+        #         print("마나포션")
+        #         self.mana_item = 30
+
+        # 이런 식으로 스킬 추가도 가능
+
+        # def add_skill(self, geted_skill):
+        #     if self.name == "전사":
+        #         self.skill_name = geted_skill  # 기존 스킬을 변경
+        #         self.get_skill = geted_skill  # 새로 스킬을 획득
+        #         print(f"{geted_skill}을 얻었다")
+        ############ 김주영 수정##########
+
     def level_up(self):
         if self.exp >= 200:
             # 경험치가 200 넘었을경우
@@ -265,8 +276,8 @@ class ItemEffect:
         self.magic_power_up = magic_power_up
 
     def item_power(self, player):
-        player.attack_item += self.power_up
-        player.magic_item += self.magic_power_up
+        player.power_item += self.power_up
+        player.mpower_item += self.magic_power_up
 
     def __str__(self):
         return f'ItemEffect({self.name})'
