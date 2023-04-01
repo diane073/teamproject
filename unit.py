@@ -20,8 +20,8 @@ class Character:
 
         self.skill_name = skill_name  # 수정하면 스킬도 획득 등으로 수정가능
         # self.get_skill = ''
-        self.attack_item = 0        #
-        self.magic_item = 0
+        self.power_item = 0        #
+        self.mpower_item = 0
         self.heal_item = 0
         self.mana_item = 0
         self.alive = True
@@ -32,8 +32,8 @@ class Character:
               f"HP : [{min(self.hp + self.heal_item, self.max_hp)}/{self.max_hp}] \n"
               f"MP : [{min(self.mp + self.mana_item, self.max_mp)}/{self.max_mp}]\n"
               f"exp: [{self.exp}/{self.max_exp}]\n"  # 김주영수정
-              f"물리공격력 : {self.power + self.attack_item}\n"
-              f"마법공격력 : {self.mpower + self.magic_item} \n"
+              f"물리공격력 : {self.power + self.power_item}\n"
+              f"마법공격력 : {self.mpower + self.mpower_item} \n"
               f"보유스킬 : {self.skill_name}")
     # 플레이어 생존확인
 
