@@ -74,17 +74,19 @@ def battle(players, monsters):
             for player in players:
                 if live(player):
                     player_attack(player, monsters)
-                if defeat(players):
-                    print('패배하였습니다.')
-                    return False
+
+            if defeat(monsters):
+                print('승리하였습니다.')
+                return True
 
             for monster in monsters:
                 print(monster.hp)
                 monster_attack(players, monster)
-            if defeat(monsters):
 
-                print('승리하였습니다.')
-                return True
+            if defeat(players):
+                print('패배하였습니다.')
+                return False
+
         elif menu == 2:
             now_stat(players, monsters)
 
@@ -207,6 +209,10 @@ def game():
     print("좋아! 그럼 행운을 빌며 선물을 주도록 하지!\n")
     # 시작 시 장비 아이템 1개 랜덤 지급
     # unit.GiveItem()
+
+    for player in players:
+        new_item = unit_set.equipitem.get_random_equipitem()
+        player.get_equipitem(new_item)
 
     print("탑은 11층까지 올라야 끝난다네, 행운을 비네!\n")
 
