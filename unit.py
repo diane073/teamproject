@@ -2,8 +2,9 @@ import random
 import math
 import time
 
-
 # 플레이어 클래스 / 지명
+
+
 class Character:
     def __init__(self, name, hp, mp, power, mpower, exp, level, skill_name):
         self.name = name
@@ -78,7 +79,7 @@ class Character:
             print('이미 죽은 몬스터입니다. 다른 몬스터를 공격합니다.')
             # 나중에 while문을 통해 재선택 가능하게
 
-    # # 아이템 얻었을 시 // 현재는 random, 추가 후 변경   #이 코드 아이템으로 떼갑니다^.^
+    # 아이템 얻었을 시 // 현재는 random, 추가 후 변경   #이 코드 아이템으로 떼갑니다^.^
     # def a_item(self):
     #     item_num = random.randint(1, 5)
     #     if item_num == 1:
@@ -247,45 +248,6 @@ class Monster_Fire_C(Monster):
             print(f"{player.name}님이 쓰러졌습니다. {player.name}님 패배 😣")
 
 
-"""여기부터 아이템 코드 추가"""
-
-
-class ItemTools:
-    def __init__(self, name, attribute='아이템'):
-        self.name = name
-        self.attribute = attribute
-
-    def wear(self):
-        print(f'{item.name}을 착용했다!')
-        print(f'{item.effect_info}의 효과를 받았다.')
-
-    def yes_or_no(question):  # 사용여부에 대한 질문 및 답변 반환 yes or no
-        while "":
-            reply = str(
-                input(f'{question} (y/n): ')).lower().strip()
-            if reply[0] == 'y':
-                return True
-            if reply[0] == 'n':
-                return False
-            elif reply[0] != 'y' or 'n':
-                print("y나 n을 입력해주세요.")
-                continue
-
-
-class RandomSelect:
-    def __init__(self):
-        pass
-
-    def item_random(self):
-        num = random.randint(1, 4)
-        return num
-
-    def item_random_select(self, collection):
-        for i in range(RandomSelect.item_random() - 1):
-            num = random.randint(1, 4)
-            inventory.append(collection[num])
-
-
 class ItemEffect:
     """
     아이템별 효과
@@ -306,28 +268,5 @@ class ItemEffect:
         player.attack_item += self.power_up
         player.magic_item += self.magic_power_up
 
-
-item = ItemEffect
-item_tools = ItemTools
-peak_random = RandomSelect()
-
-inventory = []
-
-
-# item.hp_up("빨간포션", "hp가 20 증가", 20)
-# item.mp_up("파란포션", "mp가 20 증가", 20)
-
-
-def GiveItem():
-    item_tools.yes_or_no(question="알 수 없는 아이템을 얻었다.\n 사용할까?")
-    # no 선택시 Throw away
-    if False:
-        print(f'아이템을 버렸습니다.')
-    # yes 랜덤뽑기 -> 아이템적용 -> 착용메세지
-    elif True:
-        peak_random.item_random_select(set.equipitem_dict)
-        item.item_power(inventory[-1], set.job_dict)
-        item_tools.wear()
-
-
-GiveItem()
+    def __str__(self):
+        return f'ItemEffect({self.name})'
